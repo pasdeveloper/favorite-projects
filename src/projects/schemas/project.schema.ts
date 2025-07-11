@@ -24,7 +24,7 @@ export class Project {
   @Prop({ default: 0 })
   numeroStelle: number;
 
-  @Prop({ type: [{ nome: String, email: String }], default: [] })
+  @Prop({ type: [{ nome: String, email: String, _id: false }], default: [] })
   collaboratori: ContributorDto[];
 }
 
