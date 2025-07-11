@@ -15,7 +15,7 @@ export class UsersService {
   ) {}
 
   async createUser(createUser: CreateUserDto) {
-    const salt = this.configService.get<number>('BCRYPT_SALT', 10);
+    const salt = parseInt(this.configService.get<string>('BCRYPT_SALT', '10'));
     const hashedPassword = await bcrypt.hash(createUser.password, salt);
     const newUser = new this.userModel({
       ...createUser,
@@ -26,7 +26,9 @@ export class UsersService {
 
   async updateUser(id: string, updateUser: UpdateUserDto) {
     if (updateUser.password) {
-      const salt = this.configService.get<number>('BCRYPT_SALT', 10);
+      const salt = parseInt(
+        this.configService.get<string>('BCRYPT_SALT', '10'),
+      );
       updateUser.password = await bcrypt.hash(updateUser.password, salt);
     }
     const updatedUser = await this.userModel.findByIdAndUpdate(id, updateUser, {
