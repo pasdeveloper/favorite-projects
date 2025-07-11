@@ -9,21 +9,19 @@ import { Model } from 'mongoose';
 export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
-  private users: object[] = [];
-
   createUser(createUser: CreateUserDto) {
     const newUser = new this.userModel(createUser);
     return newUser.save();
   }
 
-  updateUser(id: number, updateUser: UpdateUserDto) {
-    const existingUser = this.users.find((u) => u['id'] == id);
-    if (!existingUser) {
+  async updateUser(id: string, updateUser: UpdateUserDto) {
+    const updatedUser = await this.userModel.findByIdAndUpdate(id, updateUser, {
+      new: true,
+    });
+    if (!updatedUser) {
       throw new NotFoundException('User not found');
     }
-    const existingUserIndex = this.users.indexOf(existingUser);
-    const updatedUser = { ...existingUser, ...updateUser };
-    this.users[existingUserIndex] = updatedUser;
+    return updatedUser;
   }
 
   async getUserById(id: string) {

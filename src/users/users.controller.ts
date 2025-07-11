@@ -3,7 +3,6 @@ import {
   Controller,
   Get,
   Param,
-  ParseIntPipe,
   Patch,
   Post,
   ValidationPipe,
@@ -11,6 +10,7 @@ import {
 import { CreateUserDto } from './models/create-user.dto';
 import { UpdateUserDto } from './models/update-user.dto';
 import { UsersService } from './users.service';
+import { ParseObjectIdPipe } from '@nestjs/mongoose';
 
 @Controller('users')
 export class UsersController {
@@ -23,14 +23,14 @@ export class UsersController {
 
   @Patch(':id')
   updateUser(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseObjectIdPipe) id: string,
     @Body(ValidationPipe) updateUser: UpdateUserDto,
   ) {
     return this.usersService.updateUser(id, updateUser);
   }
 
   @Get(':id')
-  getUserById(@Param('id') id: string) {
+  getUserById(@Param('id', ParseObjectIdPipe) id: string) {
     return this.usersService.getUserById(id);
   }
 }
