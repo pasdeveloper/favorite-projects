@@ -26,8 +26,9 @@ export class ProjectsController {
   getAllProjects(
     @Query('tag') tag?: string,
     @Query('linguaggio') linguaggio?: string,
+    @Query('nome') nomeLike?: string,
   ) {
-    return this.projectsService.getAllProjects({ tag, linguaggio });
+    return this.projectsService.getAllProjects({ tag, linguaggio, nomeLike });
   }
 
   @Post()

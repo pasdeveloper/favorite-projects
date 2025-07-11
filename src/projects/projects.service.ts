@@ -19,7 +19,11 @@ export class ProjectsService {
     return project;
   }
 
-  getAllProjects(filters: { tag?: string; linguaggio?: string }) {
+  getAllProjects(filters: {
+    tag?: string;
+    linguaggio?: string;
+    nomeLike?: string;
+  }) {
     const query: Record<string, any> = {};
 
     if (filters.tag) {
@@ -28,6 +32,10 @@ export class ProjectsService {
 
     if (filters.linguaggio) {
       query.linguaggi = filters.linguaggio;
+    }
+
+    if (filters.nomeLike) {
+      query.nome = { $regex: filters.nomeLike, $options: 'i' };
     }
 
     return this.projectModel.find(query).exec();
