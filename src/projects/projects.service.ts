@@ -1,11 +1,18 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Project } from './schemas/project.schema';
+import { Model } from 'mongoose';
+import { CreateProjectDto } from './models/create-project.dto';
+import { UpdateProjectDto } from './models/update-project.dto';
 
 @Injectable()
 export class ProjectsService {
-  private projects: object[] = [];
+  constructor(
+    @InjectModel(Project.name) private projectModel: Model<Project>,
+  ) {}
 
-  getProject(id: number) {
-    const project = this.projects.find((p) => p['id'] == id);
+  async getProject(id: string) {
+    const project = await this.projectModel.findById(id);
     if (!project) {
       throw new NotFoundException('Project not found');
     }
@@ -13,40 +20,33 @@ export class ProjectsService {
   }
 
   getAllProjects(filters: { tag?: string; linguaggio?: string }) {
-    let projects = this.projects;
+    const query: Record<string, any> = {};
+
     if (filters.tag) {
-      projects = projects.filter((p) =>
-        (p['tags'] as string[])?.includes(filters.tag!),
-      );
+      query.tags = filters.tag;
     }
+
     if (filters.linguaggio) {
-      projects = projects.filter((p) =>
-        (p['linguaggi'] as string[])?.includes(filters.linguaggio!),
-      );
+      query.linguaggi = filters.linguaggio;
     }
-    if (projects.length == 0) {
-      throw new NotFoundException('No projects found');
-    }
-    return projects;
+
+    return this.projectModel.find(query).exec();
   }
 
-  createProject(createProject: {}) {
-    const lastId =
-      this.projects.length == 0
-        ? 0
-        : this.projects[this.projects.length - 1]['id'];
-    const newProject = { ...createProject, id: lastId + 1 };
-    this.projects.push(newProject);
-    return newProject;
+  createProject(createProject: CreateProjectDto) {
+    const newProject = new this.projectModel(createProject);
+    return newProject.save();
   }
 
-  updateProject(id: number, updateProject: {}) {
-    const existingProject = this.projects.find((p) => p['id'] == id);
-    if (!existingProject) {
+  async updateProject(id: string, updateProject: UpdateProjectDto) {
+    const updatedProject = await this.projectModel.findByIdAndUpdate(
+      id,
+      updateProject,
+      { new: true },
+    );
+    if (!updatedProject) {
       throw new NotFoundException('Project not found');
     }
-    const existingProjectIndex = this.projects.indexOf(existingProject);
-    const updatedProject = { ...existingProject, ...updateProject };
-    this.projects[existingProjectIndex] = updatedProject;
+    return updatedProject;
   }
 }

@@ -3,7 +3,6 @@ import {
   Controller,
   Get,
   Param,
-  ParseIntPipe,
   Patch,
   Post,
   Query,
@@ -12,13 +11,14 @@ import {
 import { CreateProjectDto } from './models/create-project.dto';
 import { UpdateProjectDto } from './models/update-project.dto';
 import { ProjectsService } from './projects.service';
+import { ParseObjectIdPipe } from '@nestjs/mongoose';
 
 @Controller('projects')
 export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
 
   @Get(':id')
-  getProject(@Param('id', ParseIntPipe) id: number) {
+  getProject(@Param('id', ParseObjectIdPipe) id: string) {
     return this.projectsService.getProject(id);
   }
 
@@ -37,7 +37,7 @@ export class ProjectsController {
 
   @Patch(':id')
   updateProject(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseObjectIdPipe) id: string,
     @Body(ValidationPipe) updateProject: UpdateProjectDto,
   ) {
     return this.projectsService.updateProject(id, updateProject);

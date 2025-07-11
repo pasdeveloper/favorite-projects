@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Types } from 'mongoose';
 
-@Schema() //TODO: nascondi _id e __v (o elimina del tutto)
+@Schema({ toJSON: { versionKey: false } })
 export class User {
   _id: Types.ObjectId;
 
