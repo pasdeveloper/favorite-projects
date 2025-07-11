@@ -1,17 +1,19 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './models/create-user.dto';
 import { UpdateUserDto } from './models/update-user.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { User } from './schemas/user.schema';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class UsersService {
+  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
+
   private users: object[] = [];
 
   createUser(createUser: CreateUserDto) {
-    const lastId =
-      this.users.length == 0 ? 0 : this.users[this.users.length - 1]['id'];
-    const newUser = { ...createUser, id: lastId + 1 };
-    this.users.push(newUser);
-    return newUser;
+    const newUser = new this.userModel(createUser);
+    return newUser.save();
   }
 
   updateUser(id: number, updateUser: UpdateUserDto) {
