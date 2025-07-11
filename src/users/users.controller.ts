@@ -16,11 +16,13 @@ import { ParseObjectIdPipe } from '@nestjs/mongoose';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  //TODO: sposta in auth module
   @Post()
   createUser(@Body(ValidationPipe) createUser: CreateUserDto) {
     return this.usersService.createUser(createUser);
   }
 
+  //TODO: l'utente può modificare solo il proprio profilo!
   @Patch(':id')
   updateUser(
     @Param('id', ParseObjectIdPipe) id: string,
@@ -29,6 +31,7 @@ export class UsersController {
     return this.usersService.updateUser(id, updateUser);
   }
 
+  //TODO: l'utente può accedere solo al proprio profilo?
   @Get(':id')
   getUserById(@Param('id', ParseObjectIdPipe) id: string) {
     return this.usersService.getUserById(id);
