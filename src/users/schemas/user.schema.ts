@@ -23,8 +23,8 @@ export class User {
   @Prop({ required: true })
   cittaNascita: string;
 
-  @Prop({ required: true })
-  ruolo: string;
+  @Prop({ required: true, enum: ['USER', 'ADMIN'] })
+  ruolo: 'USER' | 'ADMIN';
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
