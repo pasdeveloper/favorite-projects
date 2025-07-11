@@ -1,4 +1,4 @@
-import { IsDate, IsEmail, IsEnum, IsNotEmpty, MaxDate } from 'class-validator';
+import { IsDate, IsEmail, IsNotEmpty, MaxDate } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class CreateUserDto {
@@ -22,7 +22,4 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   cittaNascita: string;
-
-  @IsEnum(['USER', 'ADMIN'], { message: 'Unkown user role' })
-  ruolo: 'USER' | 'ADMIN';
 }

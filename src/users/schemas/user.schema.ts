@@ -23,7 +23,7 @@ export class User {
   @Prop({ required: true })
   cittaNascita: string;
 
-  @Prop({ required: true, enum: ['USER', 'ADMIN'] })
+  @Prop({ required: true, enum: ['USER', 'ADMIN'], default: 'USER' })
   ruolo: 'USER' | 'ADMIN';
 }
 
