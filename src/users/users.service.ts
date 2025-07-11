@@ -26,8 +26,8 @@ export class UsersService {
     this.users[existingUserIndex] = updatedUser;
   }
 
-  getUser(id: number) {
-    const user = this.users.find((u) => u['id'] == id);
+  async getUserById(id: string) {
+    const user = await this.userModel.findById(id);
     if (!user) {
       throw new NotFoundException('User not found');
     }

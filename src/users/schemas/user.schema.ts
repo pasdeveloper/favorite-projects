@@ -1,8 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Types } from 'mongoose';
 
-@Schema()
+@Schema() //TODO: nascondi _id e __v (o elimina del tutto)
 export class User {
-  _id: number;
+  _id: Types.ObjectId;
 
   @Prop({ required: true, unique: true })
   email: string;
