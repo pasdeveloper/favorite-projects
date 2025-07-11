@@ -47,4 +47,12 @@ export class UsersService {
     }
     return user;
   }
+
+  async getUserByEmail(email: string) {
+    const user = await this.userModel.findOne({ email }).exec();
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    return user;
+  }
 }

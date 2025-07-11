@@ -4,6 +4,7 @@ import { ProjectsModule } from './projects/projects.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { FavoritesModule } from './favorites/favorites.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { FavoritesModule } from './favorites/favorites.module';
     UsersModule,
     ProjectsModule,
     FavoritesModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],

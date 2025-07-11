@@ -1,4 +1,10 @@
-import { IsDate, IsEmail, IsNotEmpty, MaxDate } from 'class-validator';
+import {
+  IsDate,
+  IsEmail,
+  IsNotEmpty,
+  MaxDate,
+  MinLength,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class CreateUserDto {
@@ -7,6 +13,11 @@ export class CreateUserDto {
   email: string;
 
   @IsNotEmpty()
+  @MinLength(8)
+  // @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, {
+  //   message:
+  //     'Password must contain at least one lowercase letter, one uppercase letter and one number',
+  // })
   password: string;
 
   @IsNotEmpty()
