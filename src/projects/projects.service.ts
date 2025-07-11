@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 
 @Injectable()
 export class ProjectsService {
-  private projects: {}[] = [];
+  private projects: object[] = [];
 
   getProject(id: number) {
     const project = this.projects.find((p) => p['id'] == id);

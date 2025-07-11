@@ -4,7 +4,7 @@ import { UpdateUserDto } from './models/update-user.dto';
 
 @Injectable()
 export class UsersService {
-  private users: {}[] = [];
+  private users: object[] = [];
 
   createUser(createUser: CreateUserDto) {
     const lastId =

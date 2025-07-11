@@ -1,17 +1,14 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { ProjectsModule } from './projects/projects.module';
 import { MongooseModule } from '@nestjs/mongoose';
 
+// TODO: sposta in config module
+const dbUri = 'mongodb://localhost:27017/user_projects';
+
 @Module({
-  imports: [
-    UsersModule,
-    ProjectsModule,
-    MongooseModule.forRoot('mongodb://localhost:27017/mydb'),
-  ],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [UsersModule, ProjectsModule, MongooseModule.forRoot(dbUri)],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
