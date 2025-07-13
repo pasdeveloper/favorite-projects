@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Favorite } from './schemas/favorite.schema';
 import { Model, Types } from 'mongoose';
@@ -25,8 +29,7 @@ export class FavoritesService {
       userId,
     });
     if (existingFavorite) {
-      // TODO: oppure ritornare errore?
-      return existingFavorite;
+      throw new ConflictException('Project already is user favorite');
     }
 
     const favorite = new this.favoriteModel({
