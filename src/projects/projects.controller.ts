@@ -6,14 +6,18 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
 import { CreateProjectDto } from './models/create-project.dto';
 import { UpdateProjectDto } from './models/update-project.dto';
 import { ProjectsService } from './projects.service';
 import { ParseObjectIdPipe } from '@nestjs/mongoose';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { RequiredRoles } from '../auth/decorators/required-roles.decorator';
 
 @Controller('projects')
+@UseGuards(RolesGuard)
 export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
 
@@ -33,6 +37,7 @@ export class ProjectsController {
 
   //TODO: utente corrente conta come collaboratore?
   @Post()
+  @RequiredRoles('ADMIN')
   createProject(@Body(ValidationPipe) createProject: CreateProjectDto) {
     return this.projectsService.createProject(createProject);
   }
