@@ -3,7 +3,7 @@ import { CreateUserDto } from './models/create-user.dto';
 import { UpdateUserDto } from './models/update-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './schemas/user.schema';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
 
@@ -24,7 +24,7 @@ export class UsersService {
     return newUser.save();
   }
 
-  async updateUser(id: string, updateUser: UpdateUserDto) {
+  async updateUser(id: Types.ObjectId, updateUser: UpdateUserDto) {
     if (updateUser.password) {
       const salt = parseInt(
         this.configService.get<string>('BCRYPT_SALT', '10'),
