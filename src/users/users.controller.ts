@@ -15,6 +15,7 @@ import { ParseObjectIdPipe } from '@nestjs/mongoose';
 import { CurrentUserId } from '../auth/decorators/current-user-id.decorator';
 import { Public } from '../auth/decorators/is-public.decorator';
 import { Types } from 'mongoose';
+import { ApiBody, ApiOperation, ApiParam } from '@nestjs/swagger';
 
 @Controller('users')
 export class UsersController {
@@ -23,11 +24,34 @@ export class UsersController {
   //TODO: sposta in auth module?
   @Public()
   @Post()
+  @ApiOperation({
+    summary: 'Registra un nuovo utente',
+    description:
+      'Crea un nuovo account utente. Questo endpoint è pubblico e non richiede autenticazione.',
+  })
+  @ApiBody({
+    type: CreateUserDto,
+    description: 'Dati per la registrazione del nuovo utente',
+  })
   createUser(@Body(ValidationPipe) createUser: CreateUserDto) {
     return this.usersService.createUser(createUser);
   }
 
   @Patch(':id')
+  @ApiOperation({
+    summary: 'Aggiorna il profilo utente',
+    description:
+      'Aggiorna i dati del profilo utente. Un utente può modificare solo il proprio profilo.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: "ID dell'utente da aggiornare (MongoDB ObjectId)",
+    example: '507f1f77bcf86cd799439011',
+  })
+  @ApiBody({
+    type: UpdateUserDto,
+    description: "Dati per l'aggiornamento del profilo utente",
+  })
   updateUser(
     @CurrentUserId() currentUserId: string,
     @Param('id', ParseObjectIdPipe) id: Types.ObjectId,
@@ -41,6 +65,16 @@ export class UsersController {
 
   //TODO: l'utente può accedere solo al proprio profilo?
   @Get(':id')
+  @ApiOperation({
+    summary: 'Ottieni profilo utente',
+    description:
+      'Recupera i dati del profilo di un utente specifico utilizzando il suo ID',
+  })
+  @ApiParam({
+    name: 'id',
+    description: "ID dell'utente (MongoDB ObjectId)",
+    example: '507f1f77bcf86cd799439011',
+  })
   getUserById(@Param('id', ParseObjectIdPipe) id: string) {
     return this.usersService.getUserById(id);
   }
