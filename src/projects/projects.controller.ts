@@ -31,6 +31,7 @@ export class ProjectsController {
     return this.projectsService.getAllProjects({ tag, linguaggio, nomeLike });
   }
 
+  //TODO: utente corrente conta come collaboratore?
   @Post()
   createProject(@Body(ValidationPipe) createProject: CreateProjectDto) {
     return this.projectsService.createProject(createProject);
