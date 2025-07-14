@@ -15,7 +15,13 @@ import { ParseObjectIdPipe } from '@nestjs/mongoose';
 import { CurrentUserId } from '../auth/decorators/current-user-id.decorator';
 import { Public } from '../auth/decorators/is-public.decorator';
 import { Types } from 'mongoose';
-import { ApiBody, ApiOperation, ApiParam } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiParam,
+} from '@nestjs/swagger';
 import { MapToDto } from '../core/decorators/map-to-dto.decorator';
 import { UserDto } from './models/user.dto';
 
@@ -36,6 +42,10 @@ export class UsersController {
     type: CreateUserDto,
     description: 'Dati per la registrazione del nuovo utente',
   })
+  @ApiCreatedResponse({
+    type: UserDto,
+    description: 'Utente creato con successo',
+  })
   createUser(@Body(ValidationPipe) createUser: CreateUserDto) {
     return this.usersService.createUser(createUser);
   }
@@ -55,6 +65,10 @@ export class UsersController {
   @ApiBody({
     type: UpdateUserDto,
     description: "Dati per l'aggiornamento del profilo utente",
+  })
+  @ApiOkResponse({
+    type: UserDto,
+    description: 'Utente aggiornato con successo',
   })
   updateUser(
     @CurrentUserId() currentUserId: string,
@@ -79,6 +93,10 @@ export class UsersController {
     name: 'id',
     description: "ID dell'utente (MongoDB ObjectId)",
     example: '507f1f77bcf86cd799439011',
+  })
+  @ApiOkResponse({
+    type: UserDto,
+    description: 'Utente recuperato con successo',
   })
   getUserById(@Param('id', ParseObjectIdPipe) id: string) {
     return this.usersService.getUserById(id);

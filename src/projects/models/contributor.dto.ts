@@ -6,7 +6,6 @@ export class ContributorDto {
   @IsNotEmpty()
   @ApiProperty({
     description: 'Nome del collaboratore',
-    example: 'Mario Rossi',
     minLength: 1,
   })
   nome: string;
@@ -15,7 +14,6 @@ export class ContributorDto {
   @IsNotEmpty()
   @ApiProperty({
     description: 'Email del collaboratore',
-    example: 'mario.rossi@email.com',
     format: 'email',
   })
   email: string;

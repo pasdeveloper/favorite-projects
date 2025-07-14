@@ -13,7 +13,13 @@ import { AddFavoriteDto } from './models/add-favorite.dto';
 import { CurrentUserId } from '../auth/decorators/current-user-id.decorator';
 import { ParseObjectIdPipe } from '@nestjs/mongoose';
 import { Types } from 'mongoose';
-import { ApiBody, ApiOperation, ApiParam } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiParam,
+} from '@nestjs/swagger';
 import { MapToDto } from '../core/decorators/map-to-dto.decorator';
 import { FavoriteDto } from './models/favorite.dto';
 
@@ -31,6 +37,10 @@ export class FavoritesController {
   @ApiBody({
     type: AddFavoriteDto,
     description: 'Dati del progetto da aggiungere ai preferiti',
+  })
+  @ApiCreatedResponse({
+    type: FavoriteDto,
+    description: 'Preferito aggiunto con successo',
   })
   createFavorite(
     @CurrentUserId() currentUserId: string,
@@ -50,6 +60,10 @@ export class FavoritesController {
     name: 'id',
     description: 'ID del preferito da rimuovere (MongoDB ObjectId)',
     example: '507f1f77bcf86cd799439011',
+  })
+  @ApiOkResponse({
+    type: FavoriteDto,
+    description: 'Preferito rimosso con successo',
   })
   async removeFavorite(
     @CurrentUserId() currentUserId: string,
@@ -72,6 +86,10 @@ export class FavoritesController {
     summary: "Ottieni preferiti dell'utente",
     description:
       "Recupera la lista completa dei progetti preferiti dell'utente autenticato",
+  })
+  @ApiOkResponse({
+    type: [FavoriteDto],
+    description: 'Preferiti recuperati con successo',
   })
   getUserFavorites(@CurrentUserId() currentUserId: string) {
     return this.favoriteService.getUserFavorites(currentUserId);

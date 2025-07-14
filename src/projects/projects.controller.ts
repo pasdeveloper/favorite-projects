@@ -15,7 +15,14 @@ import { ProjectsService } from './projects.service';
 import { ParseObjectIdPipe } from '@nestjs/mongoose';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { RequiredRoles } from '../auth/decorators/required-roles.decorator';
-import { ApiBody, ApiOperation, ApiParam, ApiQuery } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiParam,
+  ApiQuery,
+} from '@nestjs/swagger';
 import { MapToDto } from '../core/decorators/map-to-dto.decorator';
 import { ProjectDto } from './models/project.dto';
 import { ProjectSummaryDto } from './models/project-summary.dto';
@@ -35,6 +42,10 @@ export class ProjectsController {
     name: 'id',
     description: 'ID del progetto (MongoDB ObjectId)',
     example: '507f1f77bcf86cd799439011',
+  })
+  @ApiOkResponse({
+    type: ProjectDto,
+    description: 'Progetto recuperato con successo',
   })
   getProject(@Param('id', ParseObjectIdPipe) id: string) {
     return this.projectsService.getProject(id);
@@ -64,6 +75,10 @@ export class ProjectsController {
     description: 'Filtra i progetti per nome (ricerca parziale)',
     example: 'api',
   })
+  @ApiOkResponse({
+    type: [ProjectSummaryDto],
+    description: 'Lista progetti recuperata con successo',
+  })
   getAllProjects(
     @Query('tag') tag?: string,
     @Query('linguaggio') linguaggio?: string,
@@ -84,6 +99,10 @@ export class ProjectsController {
     type: CreateProjectDto,
     description: 'Dati per la creazione del progetto',
   })
+  @ApiCreatedResponse({
+    type: ProjectDto,
+    description: 'Progetto creato con successo',
+  })
   createProject(@Body(ValidationPipe) createProject: CreateProjectDto) {
     return this.projectsService.createProject(createProject);
   }
@@ -102,6 +121,10 @@ export class ProjectsController {
   @ApiBody({
     type: UpdateProjectDto,
     description: "Dati per l'aggiornamento del progetto",
+  })
+  @ApiOkResponse({
+    type: ProjectDto,
+    description: 'Progetto aggiornato con successo',
   })
   updateProject(
     @Param('id', ParseObjectIdPipe) id: string,
