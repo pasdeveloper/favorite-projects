@@ -10,6 +10,28 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: admin
     volumes:
       - mongodb_data:/data/db
+    networks:
+      - app-network
+
+  nestjs-api:
+    build: .
+    container_name: nestjs-api
+    ports:
+      - '3000:3000'
+    depends_on:
+      - mongodb
+    env_file:
+      - .env.docker
+    volumes:
+      - .:/app
+      - /app/node_modules
+    networks:
+      - app-network
+    command: npm run start:dev
 
 volumes:
   mongodb_data:
+
+networks:
+  app-network:
+    driver: bridge
