@@ -16,6 +16,9 @@ import { ParseObjectIdPipe } from '@nestjs/mongoose';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { RequiredRoles } from '../auth/decorators/required-roles.decorator';
 import { ApiBody, ApiOperation, ApiParam, ApiQuery } from '@nestjs/swagger';
+import { MapToDto } from '../core/decorators/map-to-dto.decorator';
+import { ProjectDto } from './models/project.dto';
+import { ProjectSummaryDto } from './models/project-summary.dto';
 
 @Controller('projects')
 @UseGuards(RolesGuard)
@@ -23,6 +26,7 @@ export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
 
   @Get(':id')
+  @MapToDto(ProjectDto)
   @ApiOperation({
     summary: 'Ottieni un progetto specifico',
     description: 'Recupera i dettagli di un progetto utilizzando il suo ID',
@@ -37,6 +41,7 @@ export class ProjectsController {
   }
 
   @Get()
+  @MapToDto(ProjectSummaryDto)
   @ApiOperation({
     summary: 'Ottieni tutti i progetti',
     description: 'Recupera una lista di tutti i progetti con filtri opzionali',
@@ -70,6 +75,7 @@ export class ProjectsController {
   //TODO: utente corrente conta come collaboratore?
   @Post()
   @RequiredRoles('ADMIN')
+  @MapToDto(ProjectDto)
   @ApiOperation({
     summary: 'Crea un nuovo progetto',
     description: 'Crea un nuovo progetto. Richiede ruolo ADMIN.',
@@ -83,6 +89,7 @@ export class ProjectsController {
   }
 
   @Patch(':id')
+  @MapToDto(ProjectDto)
   @ApiOperation({
     summary: 'Aggiorna un progetto esistente',
     description: 'Aggiorna parzialmente i dati di un progetto esistente',

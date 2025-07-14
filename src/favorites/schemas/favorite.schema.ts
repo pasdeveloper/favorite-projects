@@ -16,3 +16,5 @@ export class Favorite {
 }
 
 export const FavoriteSchema = SchemaFactory.createForClass(Favorite);
+
+export type FavoriteDocument = Favorite & Document;

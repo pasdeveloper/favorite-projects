@@ -16,6 +16,8 @@ import { CurrentUserId } from '../auth/decorators/current-user-id.decorator';
 import { Public } from '../auth/decorators/is-public.decorator';
 import { Types } from 'mongoose';
 import { ApiBody, ApiOperation, ApiParam } from '@nestjs/swagger';
+import { MapToDto } from '../core/decorators/map-to-dto.decorator';
+import { UserDto } from './models/user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -24,6 +26,7 @@ export class UsersController {
   //TODO: sposta in auth module?
   @Public()
   @Post()
+  @MapToDto(UserDto)
   @ApiOperation({
     summary: 'Registra un nuovo utente',
     description:
@@ -38,6 +41,7 @@ export class UsersController {
   }
 
   @Patch(':id')
+  @MapToDto(UserDto)
   @ApiOperation({
     summary: 'Aggiorna il profilo utente',
     description:
@@ -65,6 +69,7 @@ export class UsersController {
 
   //TODO: l'utente può accedere solo al proprio profilo?
   @Get(':id')
+  @MapToDto(UserDto)
   @ApiOperation({
     summary: 'Ottieni profilo utente',
     description:

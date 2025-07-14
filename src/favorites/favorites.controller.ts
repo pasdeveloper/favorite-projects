@@ -14,12 +14,15 @@ import { CurrentUserId } from '../auth/decorators/current-user-id.decorator';
 import { ParseObjectIdPipe } from '@nestjs/mongoose';
 import { Types } from 'mongoose';
 import { ApiBody, ApiOperation, ApiParam } from '@nestjs/swagger';
+import { MapToDto } from '../core/decorators/map-to-dto.decorator';
+import { FavoriteDto } from './models/favorite.dto';
 
 @Controller('favorites')
 export class FavoritesController {
   constructor(private readonly favoriteService: FavoritesService) {}
 
   @Post()
+  @MapToDto(FavoriteDto)
   @ApiOperation({
     summary: 'Aggiungi progetto ai preferiti',
     description:
@@ -37,6 +40,7 @@ export class FavoritesController {
   }
 
   @Delete(':id')
+  @MapToDto(FavoriteDto)
   @ApiOperation({
     summary: 'Rimuovi progetto dai preferiti',
     description:
@@ -63,6 +67,7 @@ export class FavoritesController {
   }
 
   @Get()
+  @MapToDto(FavoriteDto)
   @ApiOperation({
     summary: "Ottieni preferiti dell'utente",
     description:
