@@ -1,0 +1,305 @@
+{
+  "v": 8,
+  "name": "LBD webapi",
+  "folders": [
+    {
+      "v": 8,
+      "name": "user",
+      "folders": [],
+      "requests": [
+        {
+          "v": "14",
+          "name": "create user",
+          "method": "POST",
+          "endpoint": "http://localhost:3000/users",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "none",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"nome\":\"Ciccio\",\n  \"cognome\":\"Bello\",\n  \"password\":\"123\",\n  \"email\":\"cicciobello@gmail.com\",\n  \"dataNascita\": \"1990-07-04T10:30:00.000Z\",\n  \"cittaNascita\":\"Roma\",\n  \"password\":\"12345678\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "14",
+          "name": "get user",
+          "method": "GET",
+          "endpoint": "http://localhost:3000/users/6870fb2772d37b1e99fcd13e",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "14",
+          "name": "update user",
+          "method": "PATCH",
+          "endpoint": "http://localhost:3000/users/68739b1148840dc8f955c181",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"cittaNascita\":\"Milano\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        }
+      ],
+      "auth": {
+        "authActive": true,
+        "authType": "inherit"
+      },
+      "headers": [],
+      "_ref_id": "coll_mcym4rxz_0207ed18-8143-4bf5-815c-c57ab8cbbd8e"
+    },
+    {
+      "v": 8,
+      "name": "project",
+      "folders": [],
+      "requests": [
+        {
+          "v": "14",
+          "name": "create project",
+          "method": "POST",
+          "endpoint": "http://localhost:3000/projects",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"nome\":\"WebApi\",\n  \"descrizione\":\"Un'api per gestire i progetti preferiti\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "14",
+          "name": "get project",
+          "method": "GET",
+          "endpoint": "http://localhost:3000/projects/68739e44b90909cf5d1e68f9",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "14",
+          "name": "filter projects",
+          "method": "GET",
+          "endpoint": "http://localhost:3000/projects",
+          "params": [
+            {
+              "key": "linguaggio",
+              "value": "javascript",
+              "active": false,
+              "description": ""
+            },
+            {
+              "key": "tag",
+              "value": "api",
+              "active": false,
+              "description": ""
+            },
+            {
+              "key": "nome",
+              "value": "web",
+              "active": false,
+              "description": ""
+            }
+          ],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "14",
+          "name": "update project",
+          "method": "PATCH",
+          "endpoint": "http://localhost:3000/projects/68739e44b90909cf5d1e68f9",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"linguaggi\": [\"javascript\",\"python\"],\n  \"tags\": [\"apis\"],\n  \"numeroCommit\": 5,\n  \"collaboratori\":[{\n    \"nome\":\"Paolo\",\n    \"email\":\"Paolo@gmail.com\"\n  }]\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        }
+      ],
+      "auth": {
+        "authActive": true,
+        "authType": "inherit"
+      },
+      "headers": [],
+      "_ref_id": "coll_mcym51c7_ecbe005d-256e-4682-afa2-f4c87e5a5b75"
+    },
+    {
+      "v": 8,
+      "name": "auth",
+      "folders": [],
+      "requests": [
+        {
+          "v": "14",
+          "name": "login",
+          "method": "POST",
+          "endpoint": "http://localhost:3000/auth/login",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "none",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"email\":\"cicciobello3@gmail.com\",\n  \"password\":\"12345678\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        }
+      ],
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "headers": [],
+      "_ref_id": "coll_mcz6vsvm_96cf8d0a-0a90-4ef1-93cb-b8a7772654d2"
+    },
+    {
+      "v": 8,
+      "name": "favorites",
+      "folders": [],
+      "requests": [
+        {
+          "v": "14",
+          "name": "add favorite",
+          "method": "POST",
+          "endpoint": "http://localhost:3000/favorites",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"projectId\":\"68739e44b90909cf5d1e68f9\",\n  \"description\":\"è il mio progetto\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "14",
+          "name": "add favorite",
+          "method": "DELETE",
+          "endpoint": "http://localhost:3000/favorites/68739ec6b90909cf5d1e68fc",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        },
+        {
+          "v": "14",
+          "name": "get user favorites",
+          "method": "GET",
+          "endpoint": "http://localhost:3000/favorites",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {}
+        }
+      ],
+      "auth": {
+        "authActive": true,
+        "authType": "inherit"
+      },
+      "headers": [],
+      "_ref_id": "coll_md1m9fw3_9ea2ffcb-8da9-48fa-b4df-9640726e7a58"
+    }
+  ],
+  "requests": [],
+  "auth": {
+    "authType": "bearer",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODczOWM1YTIwNmE2MWU2NTM5MzY2NzgiLCJlbWFpbCI6ImNpY2Npb2JlbGxvQGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzUyNDk2NTk5LCJleHAiOjE3NTI1MTgxOTl9.Czf2c5tB_7vL4TtPt3IYw2yhFHR5_CP_vV1RcL_xWIk",
+    "authActive": true
+  },
+  "headers": [],
+  "_ref_id": "coll_mcxaktze_3e7a6f6a-b002-4d3e-9ca4-4b1e60a4fb17"
+}
